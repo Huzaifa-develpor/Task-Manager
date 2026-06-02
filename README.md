@@ -19,7 +19,7 @@ A secure full-stack task management application that allows users to organize an
 ### Frontend
 
 * React.js
-* CSS
+* Tailwind
 
 ### Backend
 
