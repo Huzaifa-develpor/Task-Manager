@@ -9,7 +9,7 @@ const ViewTasks = () => {
 
     let getData = async () => {
         try{
-            const res = await axios.get('http://localhost:3000/web/todos/view',{
+            const res = await axios.get('https://task-manager-production-3ca0.up.railway.app/web/todos/view',{
                 headers:{
                     Authorization:`Bearer${token}`
                 }
@@ -25,7 +25,7 @@ const ViewTasks = () => {
 
     let delTask = async (DelId) => {
   await axios.delete(
-    `http://localhost:3000/web/todos/delete/${DelId}`,
+    `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`,
     {
       headers: {
         Authorization: `Bearer${token}`

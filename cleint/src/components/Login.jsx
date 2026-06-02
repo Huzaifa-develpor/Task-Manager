@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/web/todos/login",
+        "https://task-manager-production-3ca0.up.railway.app/web/todos/login",
         loginData
       );
 
