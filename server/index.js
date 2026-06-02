@@ -6,7 +6,12 @@ let cookieParser= require('cookie-parser')
 require('dotenv').config()
 const todoRouter=require('./Routes/todoRoutes')
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: "https://task-manager-pscm.vercel.app",
+    credentials: true,
+  })
+);
 app.use(cookieParser())
 
 app.use('/web/todos',todoRouter)
