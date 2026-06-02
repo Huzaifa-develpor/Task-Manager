@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FaPlus, FaList } from 'react-icons/fa'
-import Header from './header'
+import Header from './Header'
 
 const Home = () => {
   return (
