@@ -1,4 +1,4 @@
-import Header from "./header"
+import Header from "./Header"
 import { FaTrash } from "react-icons/fa";
 import { useEffect,useState } from "react";
 import axios from "axios";

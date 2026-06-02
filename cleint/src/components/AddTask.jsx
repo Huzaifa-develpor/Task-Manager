@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './header'
+import Header from './Header'
 import {useState} from 'react'
 import axios from 'axios'
 
