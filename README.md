@@ -1,124 +1,93 @@
-# Task Manager App
+# Task Manager
 
-## 📌 Overview
+A secure full-stack task management application that allows users to organize and manage their tasks efficiently. The application includes authentication, protected routes, and user-specific task management to ensure data privacy and security.
 
-This is a full-stack Task Manager application with authentication and protected routes. Users can securely sign up, log in, and manage their personal tasks. Each user can only access their own data, ensuring privacy and security.
+## Features
 
----
+* User Registration
+* User Login Authentication
+* JWT-Based Authorization
+* Protected Routes
+* Add Tasks
+* View Tasks
+* Delete Tasks
+* User-Specific Task Management
+* Secure Backend API
 
-## 🚀 Features
+## Tech Stack
 
-* User Signup & Login (Authentication)
-* JWT-based secure login system
-* Protected routes (No access without login)
-* Add new tasks
-* View all tasks
-* Delete tasks
-* User-specific task management
-* Secure API endpoints
+### Frontend
 
----
+* React.js
+* CSS
 
-## 🛠️ Tech Stack
+### Backend
 
-* Frontend: React.js
-* Backend: Node.js, Express.js
-* Database: MongoDB
-* Authentication: JWT (JSON Web Token)
-* Styling: CSS / Tailwind (if used)
+* Node.js
+* Express.js
 
----
+### Database
 
-## 🔐 Authentication Flow
+* MongoDB
 
-* User registers an account
-* Logs in using credentials
-* Receives a JWT token
-* Token is used to access protected routes
-* Without login, no task operations are allowed
+### Authentication
 
----
+* JSON Web Token (JWT)
+* Bcrypt
 
-## 📂 Project Structure
+## Installation
 
-```
-client/   → Frontend (React)
-server/   → Backend (Node + Express)
-models/   → Database schemas
-routes/   → API routes
-middleware/ → Auth middleware
+### Clone Repository
+
+```bash
+git clone https://github.com/Huzaifa-develpor/Task-Manager.git
 ```
 
----
-
-## ▶️ Installation & Setup
-
-### 1. Clone repository
-
-```
-git clone https://github.com/your-username/task-manager.git
-```
-
-### 2. Install dependencies
-
-Backend:
-
-```
-cd server
-npm install
-```
+### Install Dependencies
 
 Frontend:
 
-```
-cd client
+```bash
 npm install
 ```
 
-### 3. Setup environment variables
+Backend:
 
-Create `.env` file in backend:
-
+```bash
+npm install
 ```
-MONGO_URI=your_mongodb_url
+
+### Configure Environment Variables
+
+Create a `.env` file:
+
+```env
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 PORT=5000
 ```
 
-### 4. Run project
+### Start Application
 
-Backend:
-
-```
+```bash
 npm start
 ```
 
-Frontend:
+## Security Features
 
-```
-npm start
-```
+* Password Hashing using Bcrypt
+* JWT Authentication
+* Protected API Routes
+* User-Based Data Access Control
 
----
+## Future Improvements
 
-## 🔒 Protected Routes
+* Edit Tasks
+* Task Status Management
+* Task Categories
+* Search and Filter Functionality
+* User Profile Management
 
-* All task-related routes require authentication
-* Middleware verifies JWT token before allowing access
-
----
-
-## 📸 Future Improvements
-
-* Update/Edit tasks feature
-* Task completion status
-* UI improvements
-* Dashboard analytics
-
----
-
-## 👨‍💻 Author
+## Author
 
 Huzaifa Anwar
-
-"# Task-Manager" 
