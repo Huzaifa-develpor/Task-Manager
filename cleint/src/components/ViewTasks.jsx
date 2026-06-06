@@ -11,16 +11,26 @@ const ViewTasks = () => {
   const getData = async () => {
     try {
       const res = await axios.get('https://task-manager-production-3ca0.up.railway.app/web/todos/view', {
-        headers: { Authorization: `Bearer ${token}` } // FIXED SPACE HERE
+        headers: { 
+          // Bearer aur token ke darmiyan space hona lazmi hai taake middleware breakdown na ho
+          Authorization: `Bearer ${token}` 
+        }
       });
-      // Safety response fallback normalization
-      if (res.data && Array.isArray(res.data.todoView)) {
+      
+      console.log("Full Backend JSON Object Received:", res.data);
+
+      // Aapke controller ke explicit signature (res.data.todoView) ko read kar raha hai
+      if (res.data && res.data.todoView && Array.isArray(res.data.todoView)) {
         setTaskList(res.data.todoView);
-      } else if (Array.isArray(res.data)) {
+      } else if (res.data && Array.isArray(res.data)) {
         setTaskList(res.data);
+      } else {
+        console.log("Data schema mismatch or list empty.");
+        setTaskList([]);
       }
+
     } catch (err) {
-      console.error("Dashboard Load Error: ", err);
+      console.error("Dashboard Dynamic Sync Error: ", err);
     } finally {
       setLoading(false);
     }
@@ -29,12 +39,12 @@ const ViewTasks = () => {
   const delTask = async (DelId) => {
     try {
       await axios.delete(`https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`, {
-        headers: { Authorization: `Bearer ${token}` } // FIXED SPACE HERE
+        headers: { Authorization: `Bearer ${token}` }
       });
       alert("Task Erased Successfully");
       getData();
     } catch (err) {
-      console.error(err);
+      console.error("Deletion Failed: ", err);
     }
   };
 
@@ -50,7 +60,7 @@ const ViewTasks = () => {
       <div className="flex flex-col items-center mt-8 px-4">
         {loading ? (
           <p className="text-slate-400 text-sm animate-pulse">Syncing live server state...</p>
-        ) : Array.isArray(taskList) && taskList.length > 0 ? (
+        ) : taskList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl">
             {taskList.map((task) => (
               <div key={task._id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between h-48 hover:border-slate-700 transition group duration-200 shadow-xl">
@@ -72,7 +82,7 @@ const ViewTasks = () => {
         ) : (
           <div className="text-center py-12 text-slate-500 flex flex-col items-center gap-3">
             <FaInbox className="text-4xl text-slate-700" />
-            <p className="text-sm font-light">Database allocation empty. Create some tasks!</p>
+            <p className="text-sm font-light">Database allocation empty. Create some tasks on your new account!</p>
           </div>
         )}
       </div>
