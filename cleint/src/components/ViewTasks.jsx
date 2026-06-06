@@ -17,7 +17,7 @@ const ViewTasks = () => {
         "https://task-manager-production-3ca0.up.railway.app/web/todos/view",
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer${token}`,
           },
         }
       );
@@ -42,7 +42,7 @@ const ViewTasks = () => {
         `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer${token}`,
           },
         }
       );
