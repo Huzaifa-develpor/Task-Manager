@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -7,7 +8,7 @@ const Header = () => {
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between sm:px-6 lg:px-8">
           
           {/* Logo / Brand Name */}
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-indigo-500/20">
               T
             </div>
@@ -19,14 +20,27 @@ const Header = () => {
                 Manage your daily tasks easily
               </p>
             </div>
-          </div>
+          </Link>
 
-          {/* Decent Badge (Status dikhane ke liye ya clean aesthetic ke liye) */}
-          <div className="flex items-center space-x-4">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
-              <span className="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live Sync
-            </span>
+          {/* Navigation Action Buttons (Login / Signup) */}
+          <div className="flex items-center space-x-3">
+            
+            {/* Login Button */}
+            <Link 
+              to="/login" 
+              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 px-4 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200"
+            >
+              Log In
+            </Link>
+
+            {/* Signup Button */}
+            <Link 
+              to="/signup" 
+              className="text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl shadow-sm shadow-indigo-500/10 hover:shadow-indigo-500/20 active:scale-[0.98] transition-all duration-200"
+            >
+              Sign Up
+            </Link>
+
           </div>
 
         </div>
