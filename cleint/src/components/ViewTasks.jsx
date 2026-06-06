@@ -1,7 +1,7 @@
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
+import Header from "../Components/Header"; // Folder name check kar lena
 
 const ViewTasks = () => {
   const [taskList, setTaskList] = useState([]);
@@ -9,6 +9,9 @@ const ViewTasks = () => {
   const token = localStorage.getItem("token");
 
   const getData = async () => {
+    console.log("getData called");
+    console.log("Token:", token);
+
     try {
       const res = await axios.get(
         "https://task-manager-production-3ca0.up.railway.app/web/todos/view",
@@ -19,20 +22,23 @@ const ViewTasks = () => {
         }
       );
 
+      console.log("API RESPONSE:", res.data);
+
       if (res.status === 200) {
-        setTaskList(res.data.todoView );
-        console.log(res.data);
-        console.log(token);
+        setTaskList(res.data.todoView || []);
       }
     } catch (err) {
-      console.error("Error fetching tasks:", err);
+      console.log("FULL ERROR:", err);
+      console.log("STATUS:", err?.response?.status);
+      console.log("DATA:", err?.response?.data);
+
       setTaskList([]);
     }
   };
 
   const delTask = async (DelId) => {
     try {
-      await axios.delete(
+      const res = await axios.delete(
         `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`,
         {
           headers: {
@@ -41,15 +47,21 @@ const ViewTasks = () => {
         }
       );
 
+      console.log("DELETE RESPONSE:", res.data);
+
       alert("Task Deleted Successfully");
       getData();
     } catch (err) {
-      console.error("Delete Error:", err);
+      console.log("DELETE ERROR:", err);
+      console.log("STATUS:", err?.response?.status);
+      console.log("DATA:", err?.response?.data);
+
       alert("Failed to delete task");
     }
   };
 
   useEffect(() => {
+    console.log("ViewTasks Mounted");
     getData();
   }, []);
 
