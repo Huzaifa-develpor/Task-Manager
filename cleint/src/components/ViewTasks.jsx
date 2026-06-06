@@ -4,26 +4,36 @@ import { FaTrash, FaInbox } from "react-icons/fa";
 import axios from "axios";
 
 const ViewTasks = () => {
+  // Strict Array initialization taake render cycle crash na ho
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
   const getData = async () => {
     try {
+      setLoading(true);
       const res = await axios.get('https://task-manager-production-3ca0.up.railway.app/web/todos/view', {
         headers: { 
-          // Bearer aur token ke darmiyan space hona lazmi hai taake middleware breakdown na ho
+          // Bearer ke baad space lazmi hai taake req.user.id mil sake
           Authorization: `Bearer ${token}` 
         }
       });
-      setTaskList(res.data.todoView);
+      
+      // Aapke controller ke explicit object key 'todoView' ko read kar raha hai
+      if (res.data && res.data.todoView && Array.isArray(res.data.todoView)) {
+        setTaskList(res.data.todoView);
+      } else if (res.data && Array.isArray(res.data)) {
+        setTaskList(res.data);
+      } else {
+        setTaskList([]); // Fallback safe array
+      }
     } catch (err) {
-      console.error("Data Fetch Failed: ", err);
+      console.error("Data fetch error: ", err);
+      setTaskList([]); // Error aane par bhi array khali rahega, crash nahi hoga
     } finally {
       setLoading(false);
-    } 
+    }
   };
-     
 
   const delTask = async (DelId) => {
     try {
@@ -31,9 +41,9 @@ const ViewTasks = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Task Erased Successfully");
-      getData();
+      getData(); // Refresh list
     } catch (err) {
-      console.error("Deletion Failed: ", err);
+      console.error("Deletion failed: ", err);
     }
   };
 
@@ -49,12 +59,14 @@ const ViewTasks = () => {
       <div className="flex flex-col items-center mt-8 px-4">
         {loading ? (
           <p className="text-slate-400 text-sm animate-pulse">Syncing live server state...</p>
-        ) : taskList.length > 0 ? (
+        ) : Array.isArray(taskList) && taskList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl">
             {taskList.map((task) => (
               <div key={task._id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between h-48 hover:border-slate-700 transition group duration-200 shadow-xl">
                 <div className="flex justify-between items-start gap-4">
-                  <h4 className="text-lg font-bold text-slate-100 truncate group-hover:text-blue-400 transition duration-200">{task.title}</h4>
+                  <h4 className="text-lg font-bold text-slate-100 truncate group-hover:text-blue-400 transition duration-200">
+                    {task.title || "Untitled Task"}
+                  </h4>
                   <button 
                     onClick={() => delTask(task._id)}
                     className="bg-slate-950 hover:bg-red-950/50 border border-slate-800 hover:border-red-900 text-slate-400 hover:text-red-400 p-2.5 rounded-xl transition flex items-center"
@@ -71,7 +83,7 @@ const ViewTasks = () => {
         ) : (
           <div className="text-center py-12 text-slate-500 flex flex-col items-center gap-3">
             <FaInbox className="text-4xl text-slate-700" />
-            <p className="text-sm font-light">Database allocation empty. Create some tasks on your new account!</p>
+            <p className="text-sm font-light">Database allocation empty. Create some tasks!</p>
           </div>
         )}
       </div>
