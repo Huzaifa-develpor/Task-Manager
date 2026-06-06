@@ -21,7 +21,7 @@ const ViewTasks = () => {
 
       if (res.status === 200) {
         setTaskList(res.data.todoView );
-        console.log(res.data.todoView);
+        console.log(res.data);
         console.log(token);
       }
     } catch (err) {
