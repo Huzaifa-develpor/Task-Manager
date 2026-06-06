@@ -20,7 +20,9 @@ const ViewTasks = () => {
       );
 
       if (res.status === 200) {
-        setTaskList(res.data.todoView || []);
+        setTaskList(res.data.todoView );
+        console.log(res.data.todoView);
+        console.log(token);
       }
     } catch (err) {
       console.error("Error fetching tasks:", err);
