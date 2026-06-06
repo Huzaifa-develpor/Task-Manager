@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "react-save";
+import axios from "axios"; // FIXED: React-save ka galat import hata kar correct kar diya hai
 import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
@@ -59,7 +59,7 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-6 text-xs text-slate-500 font-light">
-          Don't have an operational matrix?{" "}
+          Don't have an account?{" "}
           <Link to="/signup" className="text-blue-400 font-medium hover:underline">Sign up</Link>
         </p>
       </div>
