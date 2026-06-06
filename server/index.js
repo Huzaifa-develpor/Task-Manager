@@ -11,7 +11,7 @@ app.use(cookieParser())
 
 app.use('/web/todos',todoRouter)
 
-mongoose.connect(process.env.dbURl).then(()=>{
+mongoose.connect(process.env.dbURl || 3000).then(()=>{
     console.log('connected to DB')
     app.listen(process.env.PORT,()=>{
         console.log('server is running')
