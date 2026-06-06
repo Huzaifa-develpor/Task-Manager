@@ -1,7 +1,7 @@
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../Components/Header";
+import Header from "../components/Header";
 
 const ViewTasks = () => {
   const [taskList, setTaskList] = useState([]);
