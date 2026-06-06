@@ -16,25 +16,14 @@ const ViewTasks = () => {
           Authorization: `Bearer ${token}` 
         }
       });
-      
-      console.log("Full Backend JSON Object Received:", res.data);
-
-      // Aapke controller ke explicit signature (res.data.todoView) ko read kar raha hai
-      if (res.data && res.data.todoView && Array.isArray(res.data.todoView)) {
-        setTaskList(res.data.todoView);
-      } else if (res.data && Array.isArray(res.data)) {
-        setTaskList(res.data);
-      } else {
-        console.log("Data schema mismatch or list empty.");
-        setTaskList([]);
-      }
-
+      setTaskList(res.data.todoView);
     } catch (err) {
-      console.error("Dashboard Dynamic Sync Error: ", err);
+      console.error("Data Fetch Failed: ", err);
     } finally {
       setLoading(false);
-    }
+    } 
   };
+     
 
   const delTask = async (DelId) => {
     try {
