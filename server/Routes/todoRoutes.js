@@ -4,7 +4,7 @@ const {registerUser,login}= require("../Controllers/authController")
 const checkUser= require('../Middleware/checkUserMiddleware')
 let todoRouter=express.Router()
 
-app.get("/", (req,res)=>{
+todoRouter.get("/", (req,res)=>{
     res.send("Backend Running")
 })
 todoRouter.post('/add',checkUser,todoInsert)
