@@ -13,7 +13,7 @@ app.use('/web/todos',todoRouter)
 
 mongoose.connect(process.env.dbURl).then(()=>{
     console.log('connected to DB')
-    app.listen(process.env.port,()=>{
+    app.listen(process.env.PORT,()=>{
         console.log('server is running')
     })
 })
