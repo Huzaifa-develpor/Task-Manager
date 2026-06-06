@@ -4,6 +4,9 @@ const {registerUser,login}= require("../Controllers/authController")
 const checkUser= require('../Middleware/checkUserMiddleware')
 let todoRouter=express.Router()
 
+app.get("/", (req,res)=>{
+    res.send("Backend Running")
+})
 todoRouter.post('/add',checkUser,todoInsert)
 
 todoRouter.get('/view',checkUser,todoList)
