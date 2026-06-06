@@ -1,7 +1,7 @@
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header"; // Folder name check kar lena
+import Header from "../Components/Header";
 
 const ViewTasks = () => {
   const [taskList, setTaskList] = useState([]);
@@ -9,103 +9,60 @@ const ViewTasks = () => {
   const token = localStorage.getItem("token");
 
   const getData = async () => {
-    console.log("getData called");
-    console.log("Token:", token);
-
     try {
       const res = await axios.get(
         "https://task-manager-production-3ca0.up.railway.app/web/todos/view",
         {
           headers: {
-            Authorization: `Bearer${token}`,
+            Authorization: `Bearer ${token}`, // ✅ FIXED
           },
         }
       );
 
-      console.log("API RESPONSE:", res.data);
-
-      if (res.status === 200) {
-        setTaskList(res.data.todoView || []);
-      }
+      setTaskList(res.data.todoView || []);
     } catch (err) {
-      console.log("FULL ERROR:", err);
-      console.log("STATUS:", err?.response?.status);
-      console.log("DATA:", err?.response?.data);
-
+      console.log("ERROR:", err.response?.data || err.message);
       setTaskList([]);
     }
   };
 
-  const delTask = async (DelId) => {
+  const delTask = async (id) => {
     try {
-      const res = await axios.delete(
-        `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`,
+      await axios.delete(
+        `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${id}`,
         {
           headers: {
-            Authorization: `Bearer${token}`,
+            Authorization: `Bearer ${token}`, // ✅ FIXED
           },
         }
       );
 
-      console.log("DELETE RESPONSE:", res.data);
-
-      alert("Task Deleted Successfully");
+      alert("Task Deleted");
       getData();
     } catch (err) {
-      console.log("DELETE ERROR:", err);
-      console.log("STATUS:", err?.response?.status);
-      console.log("DATA:", err?.response?.data);
-
-      alert("Failed to delete task");
+      console.log(err);
     }
   };
 
   useEffect(() => {
-    console.log("ViewTasks Mounted");
     getData();
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <Header />
 
-      <h2 className="text-3xl font-bold text-center mt-6 text-gray-800">
-        View Tasks
-      </h2>
+      {taskList.map((task) => (
+        <div key={task._id}>
+          <h3>{task.title}</h3>
 
-      <div className="flex flex-col items-center mt-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-11/12">
-          {Array.isArray(taskList) && taskList.length > 0 ? (
-            taskList.map((task) => (
-              <div
-                key={task._id}
-                className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 flex flex-col h-48"
-              >
-                <div className="flex justify-between items-center mb-3">
-                  <h4 className="text-xl font-semibold text-gray-800 truncate">
-                    {task.title}
-                  </h4>
+          <p>{task.description}</p>
 
-                  <button
-                    onClick={() => delTask(task._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center gap-2 transition"
-                  >
-                    <FaTrash size={14} />
-                  </button>
-                </div>
-
-                <div className="text-gray-600 text-sm overflow-y-auto flex-1 pr-1">
-                  {task.description}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-xl text-gray-500 col-span-2 mt-4">
-              No tasks available
-            </p>
-          )}
+          <button onClick={() => delTask(task._id)}>
+            <FaTrash />
+          </button>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
