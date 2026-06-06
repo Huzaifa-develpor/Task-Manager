@@ -11,7 +11,7 @@ const ViewTasks = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        "task-manager-production-b3d0.up.railway.app/web/todos/view",
+        "https://task-manager-production-1a8a.up.railway.app/web/todos/view",
         {
           headers: {
             Authorization: `Bearer ${token}`, // ✅ FIXED
@@ -29,7 +29,7 @@ const ViewTasks = () => {
   const delTask = async (id) => {
     try {
       await axios.delete(
-        `task-manager-production-b3d0.up.railway.app/web/todos/delete/${id}`,
+        `https://task-manager-production-1a8a.up.railway.app/web/todos/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // ✅ FIXED

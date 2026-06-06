@@ -22,7 +22,7 @@ const AddTask = () => {
 
     axios
       .post(
-        "task-manager-production-b3d0.up.railway.app/web/todos/add",
+        "https://task-manager-production-1a8a.up.railway.app/web/todos/add",
         todoData,
         {
           headers: {
