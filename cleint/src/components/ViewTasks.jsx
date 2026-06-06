@@ -1,84 +1,83 @@
-import Header from "./Header"
-import { FaTrash } from "react-icons/fa";
-import { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
+import Header from "./Header";
+import { FaTrash, FaInbox } from "react-icons/fa";
 import axios from "axios";
 
 const ViewTasks = () => {
-    const [taskList, setTaskList] = useState([]);
-    let token= localStorage.getItem("token")
+  const [taskList, setTaskList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const token = localStorage.getItem("token");
 
-    let getData = async () => {
-        try{
-            const res = await axios.get('https://task-manager-production-3ca0.up.railway.app/web/todos/view',{
-                headers:{
-                    Authorization:`Bearer${token}`
-                }
-            });
-            if(res.status === 200){
-                setTaskList(res.data.todoView);
-            }
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    let delTask = async (DelId) => {
-  await axios.delete(
-    `https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`,
-    {
-      headers: {
-        Authorization: `Bearer${token}`
+  const getData = async () => {
+    try {
+      const res = await axios.get('https://task-manager-production-3ca0.up.railway.app/web/todos/view', {
+        headers: { Authorization: `Bearer ${token}` } // FIXED SPACE HERE
+      });
+      // Safety response fallback normalization
+      if (res.data && Array.isArray(res.data.todoView)) {
+        setTaskList(res.data.todoView);
+      } else if (Array.isArray(res.data)) {
+        setTaskList(res.data);
       }
+    } catch (err) {
+      console.error("Dashboard Load Error: ", err);
+    } finally {
+      setLoading(false);
     }
-  );
+  };
 
-  alert("Task Deleted Successfully")
-  getData()
+  const delTask = async (DelId) => {
+    try {
+      await axios.delete(`https://task-manager-production-3ca0.up.railway.app/web/todos/delete/${DelId}`, {
+        headers: { Authorization: `Bearer ${token}` } // FIXED SPACE HERE
+      });
+      alert("Task Erased Successfully");
+      getData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <Header />
+      <h2 className="text-3xl font-bold text-center mt-10 text-white tracking-tight">Active Dashboard</h2>
+      
+      <div className="flex flex-col items-center mt-8 px-4">
+        {loading ? (
+          <p className="text-slate-400 text-sm animate-pulse">Syncing live server state...</p>
+        ) : Array.isArray(taskList) && taskList.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl">
+            {taskList.map((task) => (
+              <div key={task._id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between h-48 hover:border-slate-700 transition group duration-200 shadow-xl">
+                <div className="flex justify-between items-start gap-4">
+                  <h4 className="text-lg font-bold text-slate-100 truncate group-hover:text-blue-400 transition duration-200">{task.title}</h4>
+                  <button 
+                    onClick={() => delTask(task._id)}
+                    className="bg-slate-950 hover:bg-red-950/50 border border-slate-800 hover:border-red-900 text-slate-400 hover:text-red-400 p-2.5 rounded-xl transition flex items-center"
+                  >
+                    <FaTrash size={14}/>
+                  </button>
+                </div>
+                <div className="text-slate-400 text-sm font-light overflow-y-auto flex-1 mt-3 pr-1 leading-relaxed">
+                  {task.description || <span className="text-slate-600 italic">No description appended.</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-slate-500 flex flex-col items-center gap-3">
+            <FaInbox className="text-4xl text-slate-700" />
+            <p className="text-sm font-light">Database allocation empty. Create some tasks!</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
-    useEffect(() => {
-        getData();
-    }, [])
-
-    return (
-        <div className="min-h-screen bg-gray-50">
-            <Header/>
-            <h2 className="text-3xl font-bold text-center mt-6 text-gray-800">View Tasks</h2>
-            
-            <div className="flex flex-col items-center mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-11/12">
-
-                    {taskList.length > 0 ? taskList.map((task) => {
-                        return(
-                            <div key={task._id} 
-                                className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 flex flex-col h-48"
-                            >
-                                {/* Title and Delete Button */}
-                                <div className="flex justify-between items-center mb-3">
-                                    <h4 className="text-xl font-semibold text-gray-800 truncate">{task.title}</h4>
-                                    <button 
-                                        onClick={() => delTask(task._id)}
-                                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center gap-2 transition"
-                                    >
-                                        <FaTrash size={14}/>
-                                    </button>
-                                </div>
-
-                                {/* Description Scrollable */}
-                                <div className="text-gray-600 text-sm overflow-y-auto flex-1 pr-1">
-                                    {task.description}
-                                </div>
-                            </div>
-                        )
-                    }) : (
-                        <p className="text-center text-xl text-gray-500 col-span-2 mt-4">No tasks available</p>
-                    )}
-
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default ViewTasks
+export default ViewTasks;
