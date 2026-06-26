@@ -50,7 +50,7 @@ const Signin = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4">
       
-      {/* Upper Branding (Login page se consistency match karne ke liye) */}
+      {/* Upper Branding  */}
       <div className="mb-6 flex items-center space-x-2">
         <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-base shadow-sm">
           T

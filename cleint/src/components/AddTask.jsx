@@ -4,7 +4,6 @@ import axios from "axios";
 
 const AddTask = () => {
   const [todoData, setTodoData] = useState({ title: "", description: "" });
-  // Custom Alert ke liye state
   const [showToast, setShowToast] = useState(false);
 
   const token = localStorage.getItem("token");
@@ -19,10 +18,10 @@ const AddTask = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        // Default alert hata kar toast show kiya
+        
         setShowToast(true);
         setTodoData({ title: "", description: "" });
-        // 3 second baad khud gayab ho jaye
+        
         setTimeout(() => setShowToast(false), 3000);
       })
       .catch((err) => console.log(err));

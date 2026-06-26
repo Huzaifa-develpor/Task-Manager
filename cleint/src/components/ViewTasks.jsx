@@ -5,13 +5,13 @@ import Header from "./Header";
 
 const ViewTasks = () => {
   const [taskList, setTaskList] = useState([]);
-  const [loading, setLoading] = useState(true);         // ✅ loading state
-  const [showToast, setShowToast] = useState(false);    // ✅ delete toast state
+  const [loading, setLoading] = useState(true);         
+  const [showToast, setShowToast] = useState(false);    
 
   const token = localStorage.getItem("token");
 
   const getData = async () => {
-    setLoading(true);                                    // fetch shuru hote hi loading true
+    setLoading(true);        
     try {
       const res = await axios.get(
         "https://task-manager-production-1a8a.up.railway.app/web/todos/view",
@@ -26,7 +26,7 @@ const ViewTasks = () => {
       console.log("ERROR:", err.response?.data || err.message);
       setTaskList([]);
     } finally {
-      setLoading(false);                                 // done hone par loading false
+      setLoading(false);            
     }
   };
 
@@ -41,7 +41,6 @@ const ViewTasks = () => {
         }
       );
 
-      // ✅ alert() hata ke toast show karo
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
 
@@ -88,7 +87,7 @@ const ViewTasks = () => {
           </div>
 
         ) : taskList.length === 0 ? (
-          /* Empty State — sirf tab jab loading done ho aur tasks zero hon */
+          
           <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300 p-8 shadow-sm">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 text-slate-400 mb-4">
               📋
