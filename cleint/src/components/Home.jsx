@@ -13,7 +13,7 @@ const Home = () => {
         {/* Hero Section */}
         <div className="text-center max-w-2xl mb-12">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 mb-4 tracking-wide uppercase">
-            🚀 Streamline Your Workflow
+             Streamline Your Workflow
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight mb-4">
             Welcome to <span className="text-indigo-600">Task Manager</span>

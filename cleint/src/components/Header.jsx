@@ -1,7 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
+
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100">
@@ -22,24 +36,38 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Navigation Action Buttons (Login / Signup) */}
+          {/* Navigation Action Buttons */}
           <div className="flex items-center space-x-3">
             
-            {/* Login Button */}
-            <Link 
-              to="/login" 
-              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 px-4 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200"
-            >
-              Log In
-            </Link>
+            {isLoggedIn ? (
+              <>
+                {/* Logout Button */}
+                <button
+                  onClick={handleLogout}
+                  className="text-sm font-semibold text-slate-600 hover:text-red-600 px-4 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200"
+                >
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <>
+                {/* Login Button */}
+                <Link 
+                  to="/login" 
+                  className="text-sm font-semibold text-slate-600 hover:text-indigo-600 px-4 py-2 rounded-xl hover:bg-slate-50 transition-all duration-200"
+                >
+                  Log In
+                </Link>
 
-            {/* Signup Button */}
-            <Link 
-              to="/signup" 
-              className="text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl shadow-sm shadow-indigo-500/10 hover:shadow-indigo-500/20 active:scale-[0.98] transition-all duration-200"
-            >
-              Sign Up
-            </Link>
+                {/* Signup Button */}
+                <Link 
+                  to="/signup" 
+                  className="text-sm font-medium bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl shadow-sm shadow-indigo-500/10 hover:shadow-indigo-500/20 active:scale-[0.98] transition-all duration-200"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
 
           </div>
 
