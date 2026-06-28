@@ -28,7 +28,7 @@ const Header = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-slate-900 tracking-tight leading-none">
-                Task Manager
+                Taskify
               </h1>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5 hidden sm:block">
                 Manage your daily tasks easily

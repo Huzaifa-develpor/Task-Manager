@@ -5,10 +5,10 @@ const checkUser = (req, res, next) => {
         const authHeader = req.header('Authorization')
         
         if (!authHeader) {
-            return res.send({ message: "No token Provided" }) // return bhi add kiya
+            return res.send({ message: "No token Provided" }) 
         }
         
-        const token = authHeader.replace("Bearer ", "").trim() // ✅ FIX
+        const token = authHeader.replace("Bearer ", "").trim() 
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
         req.user = decoded
 

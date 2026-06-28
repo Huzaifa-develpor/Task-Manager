@@ -16,7 +16,7 @@ const Home = () => {
              Streamline Your Workflow
           </span>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight mb-4">
-            Welcome to <span className="text-indigo-600">Task Manager</span>
+            Welcome to <span className="text-indigo-600">Taskify</span>
           </h1>
           <p className="text-slate-500 text-base sm:text-lg leading-relaxed">
             Easily organize, add, and view your daily tasks to stay productive, focused, and efficient every single day.
