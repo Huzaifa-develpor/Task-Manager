@@ -45,14 +45,12 @@ const ViewTasks = () => {
           },
         }
       );
-      // No need to call getData() — state already updated
     } catch (err) {
       console.log(err);
-      // API fail ho gayi tu revert karo — dobara fetch karo
       getData();
     }
   };
-  
+
   useEffect(() => {
     getData();
   }, []);
