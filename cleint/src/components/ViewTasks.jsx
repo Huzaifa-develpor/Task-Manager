@@ -31,6 +31,11 @@ const ViewTasks = () => {
   };
 
   const delTask = async (id) => {
+    // Optimistically remove from UI first
+    setTaskList((prev) => prev.filter((task) => task._id !== id));
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 1000);
+
     try {
       await axios.delete(
         `https://task-manager-production-1a8a.up.railway.app/web/todos/delete/${id}`,
@@ -40,16 +45,14 @@ const ViewTasks = () => {
           },
         }
       );
-
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-
-      getData();
+      // No need to call getData() — state already updated
     } catch (err) {
       console.log(err);
+      // API fail ho gayi tu revert karo — dobara fetch karo
+      getData();
     }
   };
-
+  
   useEffect(() => {
     getData();
   }, []);
