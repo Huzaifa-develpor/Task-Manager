@@ -14,7 +14,7 @@ const ViewTasks = () => {
     setLoading(true);        
     try {
       const res = await axios.get(
-        "https://task-manager-production-1a8a.up.railway.app/web/todos/view",
+        "https://task-manager-production-09cc.up.railway.app/web/todos/view",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const ViewTasks = () => {
 
     try {
       await axios.delete(
-        `https://task-manager-production-1a8a.up.railway.app/web/todos/delete/${id}`,
+        `https://task-manager-production-09cc.up.railway.app/web/todos/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
