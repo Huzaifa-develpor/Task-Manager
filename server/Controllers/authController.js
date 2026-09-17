@@ -8,7 +8,7 @@ const registerUser = async (req,res)=>{
     const password= await bcrypt.hash(userInfo.password,10)
     userInfo.password=password
     
-    const data=await userModel.create(userInfo)
+    const data =await userModel.create(userInfo)
     return res.send({
         status:200,
         message:"User Data saved"
@@ -44,7 +44,6 @@ const login = async (req, res) => {
     }
 
     const token = generateToken(user._id);
-    
 
     return res.send({
       status: "success",
@@ -53,6 +52,7 @@ const login = async (req, res) => {
     });
 
   } catch (err) {
+    console.error("Login error:", err)
     return res.send({
       status: "error",
       message: "Server Error"
